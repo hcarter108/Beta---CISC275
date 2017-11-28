@@ -7,6 +7,7 @@ public class Coordinates {
     private double yPos;
 
     //Constructor
+    //
     
     /**
      * Constructor for Coordinates
