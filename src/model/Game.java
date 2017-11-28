@@ -430,7 +430,7 @@ public class Game {
 				((GameBoard) currentGameView).changeScreenTo(Screens.L3Pre);
 				break;
 			}
-			case L4:{
+			case L3:{
 				((GameBoard) currentGameView).changeScreenTo(Screens.L4Pre);
 				break;}
 			default:
