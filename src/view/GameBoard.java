@@ -45,6 +45,9 @@ public class GameBoard extends JFrame implements ActionListener {
 	
 	//Getters and Setters
 	
+	public JPanel getLevelScreen(){
+		return currentScreen;
+	}
 	/**
 	 * Setter for whether or not a game is running
 	 * @author - Team 8

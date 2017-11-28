@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import helper.HelperFunctions;
+
 
 
 public class ScreenPanel extends JPanel
@@ -21,6 +23,8 @@ public class ScreenPanel extends JPanel
 
 public enum Screens {TITLE, MAIN, L1Pre, L2Pre, L3Pre, L4Pre, L1, L2, L3, L4, TUTORIAL};   //used for cases and file names
 
+private HelperFunctions helperObject = new HelperFunctions();
+
 // functions used by subclasses
 
 /**
@@ -30,26 +34,7 @@ public enum Screens {TITLE, MAIN, L1Pre, L2Pre, L3Pre, L4Pre, L1, L2, L3, L4, TU
  * @return- the ArrayList of string values from the .txt file, line-by-line
  */
 public ArrayList<String> readTXTFile(String s){
-    String fileName = "/resources/"+s+"INFO.txt";
-    String line = null;
-    ArrayList<String> parsedFile = new ArrayList<String>();
-
-    try {
-        InputStreamReader fileReader = new InputStreamReader(getClass().getResourceAsStream (fileName));
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        while((line = bufferedReader.readLine()) != null) {
-            parsedFile.add(line);
-        }   
-        bufferedReader.close();         
-    }
-    catch(FileNotFoundException ex) {
-        ex.printStackTrace();            
-    }
-    catch(IOException ex) {
-        ex.printStackTrace();                
-    }
-    
-    return parsedFile;
+    return helperObject.readTXTFile(s);
 }
 
 /**
@@ -60,14 +45,11 @@ public ArrayList<String> readTXTFile(String s){
  * @return - the image associated with the string parameter
  */
 public Image uploadImage(String s){
-	Image img = null;
-	try {
-		img = ImageIO.read(this.getClass().getResource("/images/"+s+".png"));
-	} 
-	catch (IOException e) {
-		e.printStackTrace();
-	}
-	return img;
+	return helperObject.uploadImage(s);
+}
+
+public void uploadAndPlaySound(String s){
+	helperObject.uploadAndPlaySound(s);
 }
 
 
