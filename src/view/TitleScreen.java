@@ -102,7 +102,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 	}
 	
     void playSound(String soundFile) {
-        File f = new File(soundFile);
+        File f = new File("./" + soundFile);
         AudioInputStream audioIn;
 		try {
 			audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
@@ -124,4 +124,5 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		}  
 
     }
+	
 }
