@@ -43,6 +43,7 @@ public class LevelScreen extends ScreenPanel {
 	
 	private JFrame parent;
 	private LevelScreen thisLevel;
+	private ArrayList<JButton> arrayOfAnswerButtons = new ArrayList<JButton>();
 	
 	private int DEFAULT_WIDTH = 800;
 	private int DEFAULT_HEIGHT = 600;
@@ -51,13 +52,11 @@ public class LevelScreen extends ScreenPanel {
 	private int numQsRemaining=4;
 	private int numCorrectAns = 4;
 	private int numIncorrectAnsPerQ = 3;
-	private int correctIndex;
-	private static int[] invalidIndices = new int[4];
+	
 	private ArrayList<String> listQuestions = new ArrayList<String>();
 	private ArrayList<String> listCorrectAns = new ArrayList<String>();
 	private ArrayList<String> listIncorrectAns = new ArrayList<String>();
 	private ArrayList<Integer> possibleIndices = new ArrayList<Integer>();
-	private ArrayList<Integer> setSizeQminus1 = new ArrayList<Integer>();
 	private boolean isStarted = false;
 	
 	private Game currentGame;
@@ -161,7 +160,8 @@ public class LevelScreen extends ScreenPanel {
 	 * @param d - the difficulty level of the game, from enum DifficultyLVL
 	 */
 	public void initGame(DifficultyLVL d){
-		currentGame = new Game(parent, this, d);
+		currentGame = new Game(currentScreen,d);
+		currentGame.setPanelForCommunication(this);
 	}
 
 	/**
@@ -209,12 +209,8 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 */
 	private void initIndexingSets(){
-		
-		for (int i=0; i<numQs; i++){
+		for (int i=0; i<numQs; i++)
 			possibleIndices.add(i);
-			setSizeQminus1.add(i);
-			invalidIndices[i]=0;
-		}
 	}
 	
 	/**
@@ -524,76 +520,8 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 * @return - returns a random number in the range 0 to numQs
 	 */
-	public int generateRandomRangeQ(){
-		return (int) Math.floor(Math.random()*numQs);
-	}
-	
-	/**
-	 * Updates the int[] that contains the indices that have or have not been used in generating random
-	 * questions.
-	 * @author - Team 8
-	 * @param invalidIndicesOrig - the int[] that is to be updated, must pass the object to update outside the method
-	 * @param rand- the index that is to be changed, logically this is the index that can longer be used.
-	 * @return - the updated array, where the invalid index is now added
-	 */
-	private int[] updateInvalidIndices(int[] invalidIndicesOrig, int rand) {
-		invalidIndicesOrig[rand]=-1;
-		return invalidIndicesOrig;
-	}
-	
-	/**
-	 * Reinitializes the indexing sets used in generating random questions.
-	 * @author - Team 8
-	 */
-    public void reinitializeIndexingSets()
-    {
-    	setSizeQminus1.clear();
-    	for(int i=0; i<numQs; i++){
-    		if(invalidIndices[i]>=0)
-    			invalidIndices[i]=0;
-    		setSizeQminus1.add(i);
-    	}
-    }
-    
-    /**
-     * Gets an unused index from the invalidIndices array, basically a linear search for an unused index
-     * to get an unused question.
-     * @author - Team 8
-     * @param i- the index that was already used, and is the basis from which to search for an unused index.
-     * @return - an unused index
-     */
-	public int getUnusedIndex(int i){
-		int randomSign = (Math.random()<.5) ? -1 : 1;
-		boolean foundValid=false;
-		int index = i;
-		if(randomSign<0){
-			while((index-1)>=0 && !foundValid){
-				foundValid=(invalidIndices[--index]>=0);
-			}
-			if(foundValid)
-				return index;
-			index = i;
-			while((index+1)<possibleIndices.size() && !foundValid){
-				foundValid=(invalidIndices[++index]>=0);
-			}
-			if(foundValid)
-				return index;
-		}
-		else{
-			while((index+1)<possibleIndices.size() && !foundValid){
-				foundValid=(invalidIndices[++index]>=0);
-			}
-			if(foundValid)
-				return index;
-			index = i;
-			while((index-1)>=0 && !foundValid){
-				foundValid=(invalidIndices[--index]>=0);
-			}
-			if(foundValid)
-				return index;
-			
-		}
-		return -1;
+	public int generateRandomRangeQsRemaining(){
+		return (int) Math.floor(Math.random()*numQsRemaining);
 	}
 	
 	/**
@@ -602,22 +530,23 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 */
 	public void generateRandomQ(){
-		int rand = generateRandomRangeQ();
-		if(invalidIndices[rand]<0){
-			rand=getUnusedIndex(rand);
-			System.out.println("New random: "+rand);
-		}
-		possibleIndices.get(rand);
-		invalidIndices = updateInvalidIndices(invalidIndices, rand);
-		int incorrectStartInd = numIncorrectAnsPerQ*rand;
+		int rand = generateRandomRangeQsRemaining();
+
+		int unusedIndex = possibleIndices.get(rand);
+		possibleIndices.remove(rand);
+		int incorrectStartInd = numIncorrectAnsPerQ*unusedIndex;
 		numQsRemaining--;
 		
-		
-		JButton ans1 = new JButton(listCorrectAns.get(rand));
+		JLabel instructionsLabel = new JLabel(listQuestions.get(unusedIndex));
+		JButton ans1 = new JButton(listCorrectAns.get(unusedIndex));
 	    JButton ans2 = new JButton(listIncorrectAns.get(incorrectStartInd));
 	    JButton ans3 = new JButton(listIncorrectAns.get(incorrectStartInd+1));
 	    JButton ans4 = new JButton(listIncorrectAns.get(incorrectStartInd+2));
-	    JLabel instructionsLabel = new JLabel(listQuestions.get(rand));
+	    arrayOfAnswerButtons.add(ans1);
+	    arrayOfAnswerButtons.add(ans2);
+	    arrayOfAnswerButtons.add(ans3);
+	    arrayOfAnswerButtons.add(ans4);
+	    Collections.shuffle(arrayOfAnswerButtons);
     	
     	JFrame window = new JFrame("A chance at a new life");
         JPanel panel = new JPanel(new GridBagLayout());
@@ -626,31 +555,13 @@ public class LevelScreen extends ScreenPanel {
         c.gridy = 0;
         c.weighty = 0.1;
         panel.add(instructionsLabel, c);
-        setSizeQminus1.remove(0);    
-        Collections.shuffle(setSizeQminus1);
-        correctIndex = generateRandomRangeQ();
-        for(int i=0; i<numQs; i++){
-    		c.gridy = (i+1);
-        	if(correctIndex==i)
-        		panel.add(ans1, c);
-        	else{
-        		int anotherAns = setSizeQminus1.remove(0);
-        		switch(anotherAns){
-        		case(1):{
-        			panel.add(ans2,c);
-        			break;}
-        		case(2):{
-        			panel.add(ans3, c);
-        			break;
-        		}
-        		case(3):{
-        			panel.add(ans4, c);
-        			break;
-        		}
-        		}
-        	}
+        
+        for(int i=0; i<arrayOfAnswerButtons.size(); i++){
+        	c.gridy = i+1;
+        	panel.add(arrayOfAnswerButtons.get(i), c);
         }
-        reinitializeIndexingSets();
+        
+        arrayOfAnswerButtons.clear();
         window.add(panel);
         window.setSize(250, 270);
         window.setResizable(false);
@@ -718,4 +629,38 @@ public class LevelScreen extends ScreenPanel {
 		    
 		});
 	}
+	
+	public void hasWon(){
+		pause();
+		if(!currentScreen.equals(Screens.L4))
+		{
+		int choice = JOptionPane.showConfirmDialog(this, "You've survived the level! Would you like to continue to the next level?", 
+		"You've won!", JOptionPane.YES_NO_OPTION);
+		if(choice==JOptionPane.YES_OPTION){
+			switch(currentScreen){
+			case L1:{
+				((GameBoard) parent).changeScreenTo(Screens.L2Pre);
+				break;
+			}
+			case L2:{
+				((GameBoard) parent).changeScreenTo(Screens.L3Pre);
+				break;
+			}
+			case L4:{
+				((GameBoard) parent).changeScreenTo(Screens.L4Pre);
+				break;}
+			default:
+				break;
+			}
+		}
+		else
+			((GameBoard) parent).changeScreenTo(Screens.MAIN);
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "You've completed the last level, "
+					+ "press ok to continue to the main menu!");
+			((GameBoard) parent).changeScreenTo(Screens.MAIN);
+		}
+	}
+	
 }

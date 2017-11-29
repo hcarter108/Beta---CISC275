@@ -3,11 +3,13 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Enemy{
+import model.MoveableObject.MoveableType;
+import view.ScreenPanel.Screens;
+
+public class Enemy extends MoveableObject{
 
 	//Fields
-	enum EnemyType {INVASIVE, POLLUTION};
-	EnemyType enemyType;
+	MoveableType enemyType;
 	
     private int enemyDiameter;
     private double movingAngle;
@@ -25,11 +27,11 @@ public class Enemy{
      * @param imageDiameter - The diameter of the image painted on the screen by EnemyView
      * @param b - a check on whether or not this is an invasive species instance, true means it is, false means it's a pollution enemy
      */
-    public Enemy(Coordinates coordinates, MovingVector movingVector, int imageDiameter, EnemyType type) {
+    public Enemy(Coordinates coordinates, MovingVector movingVector, Screens s, MoveableType type) {
         this.coordinates = coordinates;
         this.movingVector = movingVector;
         enemyType = type;
-        enemyDiameter = imageDiameter;
+        enemyDiameter = calculateMinDiameter(getMoveableDimensions(s, type));
         initMovingAngle();
     }
     
@@ -72,12 +74,7 @@ public class Enemy{
 
 	}
     
-    /**
-     * Checks the type of the enemy
-     * @author - Team 8
-     * @return - The boolean value of whether this is an invasive instance or not
-     */
-    public EnemyType getEnemyType(){
+    public MoveableType getEnemyType(){
     	return enemyType;
     }
     

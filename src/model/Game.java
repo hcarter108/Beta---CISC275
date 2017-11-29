@@ -2,13 +2,14 @@ package model;
 
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import model.Enemy.EnemyType;
+import model.MoveableObject.MoveableType;
 import view.LevelScreen;
 import view.ScreenPanel.Screens;
 import view.GameBoard;
@@ -19,16 +20,14 @@ public class Game {
 	
 	public enum DifficultyLVL {EASY, MEDIUM, HARD, TUTORIAL};
 	private Screens currentScreenType;
-	
-    private JFrame currentGameView;
-    private LevelScreen currentLevelScreen;
+
+	private JPanel currentPanel;
     
 	private int numEnemies;
 	private int gameObjSpeed;
     private int windowWidth = 800;
     private int windowHeight = 600;
     private int playerCollisionRad;
-    private int enemyCollisionRad;
 	private int numInvasiveEnemy;
 	private int numPollutionEnemy;
 	private boolean notQ=true;
@@ -37,7 +36,7 @@ public class Game {
 	private Enemy[] listEnemies;
     private HealthBar hb;
     private GameTimer gt;
-    private final EnemySpawnFrame enemySpawnFrame = new EnemySpawnFrame(new Coordinates(-50, -50), 
+    private final ArrayList<Coordinates> randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
     		new Coordinates(windowWidth + 50, windowHeight + 50));
 	
 
@@ -50,20 +49,16 @@ public class Game {
      * @param panel - the current Level, an instance of LevelScreen
      * @param d - the difficulty of this game, from enum DifficultyLVL
      */
-	public Game(JFrame boardView, LevelScreen panel, DifficultyLVL d){
+	public Game(Screens screenType, DifficultyLVL d){
 		super();
-		currentLevelScreen = panel;
-		currentScreenType = panel.getScreenType();
-		this.currentGameView = boardView;
-		playerCollisionRad = panel.getPlayerDiameter()/2;
-		enemyCollisionRad = panel.getEnemyDiameter()/2;
+		currentScreenType = screenType;
 		initGameVariables(d);
 		numInvasiveEnemy = (int) (.5*numEnemies);
 		numPollutionEnemy = numEnemies-numInvasiveEnemy;
 		listEnemies = new Enemy[numEnemies];
-        player = new Player(new Coordinates(windowWidth/2, windowHeight/2), panel.getPlayerDiameter());
         initListEnemies();
-		
+        player = new Player(new Coordinates(windowWidth/2, windowHeight/2), currentScreenType);
+        playerCollisionRad = player.getPlayerDiameter()/2;
 	}
 	
 	// Getters and Setters
@@ -176,6 +171,46 @@ public class Game {
 		return hb;
 	}
 	
+	/**
+	 * Getter for the x position of the start coordinates
+	 * 
+	 * @author - Team 8
+	 * @return - The x position of the start coordinates
+	 */
+	public double getSpawnXBeginning() {
+		return randomSpawnFrame.get(0).getxPos();
+	}
+
+	/**
+	 * Getter for the x position of the end coordinate
+	 * 
+	 * @author - Team 8
+	 * @return - The x position of the end coordinate
+	 */
+	public double getSpawnXEnding() {
+		return randomSpawnFrame.get(1).getxPos();
+	}
+
+	/**
+	 * Getter for the y position of the start coordinate
+	 * 
+	 * @author - Team 8
+	 * @return - The y position of the end coordinate
+	 */
+	public double getSpawnYBeginning() {
+		return randomSpawnFrame.get(0).getyPos();
+	}
+	
+	/**
+	 * Getter for the y position of the end coordinate
+	 * 
+	 * @author - Team 8
+	 * @return - The y position of the end coordinate
+	 */
+	public double getSpawnYEnding() {
+		return randomSpawnFrame.get(1).getyPos();
+	}
+	
 	//Initialize Game Variables
 
 	/**
@@ -241,8 +276,11 @@ public class Game {
 			break;
 		}
 		
-		}
-		
+		}	
+	}
+	
+	public void setPanelForCommunication(JPanel panel){
+        currentPanel = panel;
 	}
 	
 	/**
@@ -251,17 +289,24 @@ public class Game {
 	 */
     private void initListEnemies() {
         for(int i = 0; i<numInvasiveEnemy; i++){
-            Coordinates ballCoordinates = randomizeCoordinates();
+            Coordinates spawnCoordinates = randomizeCoordinates();
             MovingVector movingVector = randomizeMovingVector();
-            Enemy anEnemy = new Enemy(ballCoordinates, movingVector, 2*enemyCollisionRad, EnemyType.INVASIVE);
+            Enemy anEnemy = new Enemy(spawnCoordinates, movingVector, currentScreenType, MoveableType.INVASIVE);
             listEnemies[i] = anEnemy;
         }
         for(int i = 0; i< numPollutionEnemy; i++){
-            Coordinates ballCoordinates = randomizeCoordinates();
+            Coordinates spawnCoordinates = randomizeCoordinates();
             MovingVector movingVector = randomizeMovingVector();
-            Enemy anEnemy = new Enemy(ballCoordinates, movingVector, 2*enemyCollisionRad, EnemyType.POLLUTION);
+            Enemy anEnemy = new Enemy(spawnCoordinates, movingVector, currentScreenType, MoveableType.POLLUTION);
             listEnemies[numInvasiveEnemy+i] = anEnemy;
         }
+    }
+    
+    private ArrayList<Coordinates> initEnemySpawnFrame(Coordinates start, Coordinates end){
+ 	   ArrayList<Coordinates> randomSpawnFrame = new ArrayList<Coordinates>();
+ 	   randomSpawnFrame.add(start);
+ 	   randomSpawnFrame.add(end);
+ 	   return randomSpawnFrame;
     }
 
     // Movement logic, also checks for wins and losses
@@ -294,7 +339,7 @@ public class Game {
     
     /**
      * Moves the enemies to a new location, checks for collisions and handles in-game death and 
-     * or victory as well, based on either zero health or zero time, respectiely. Also, if the enemy 
+     * or victory as well, based on either zero health or zero time, respectively. Also, if the enemy 
      * has moved outside the frame or if it collided with the player, it is replaced by a new
      * enemy instance
      * 
@@ -303,34 +348,36 @@ public class Game {
 
         for(int i = 0; i< listEnemies.length; i++) {
             Coordinates ballCoordinates = listEnemies[i].getCoordinates();
-            if(ballCoordinates.getxPos() < enemySpawnFrame.getXBeginning()
-                    || ballCoordinates.getxPos() > enemySpawnFrame.getXEnding()
-                    || ballCoordinates.getyPos() > enemySpawnFrame.getYEnding()
-                    || ballCoordinates.getyPos() < enemySpawnFrame.getYBeginning() ) {
+            if(ballCoordinates.getxPos() < getSpawnXBeginning()
+                    || ballCoordinates.getxPos() > getSpawnXEnding()
+                    || ballCoordinates.getyPos() > getSpawnYEnding()
+                    || ballCoordinates.getyPos() < getSpawnYBeginning() ) {
                 Coordinates newBallCoordinates = randomizeCoordinates();
                 MovingVector movingVector = randomizeMovingVector();
                 Enemy anEnemy = new Enemy(newBallCoordinates, movingVector, 
-                		2*enemyCollisionRad, listEnemies[i].getEnemyType());
+                		currentScreenType, listEnemies[i].getEnemyType());
                 listEnemies[i] = anEnemy;
             }
 
+            // uses view
+            
             if(checkForCollision(listEnemies[i])) {
                 int currentHealthPoints = getHealthBar().getCurrentPoints();
                 getHealthBar().setCurrentPoints(currentHealthPoints - 30);
                 if(getHealthBar().getCurrentPoints()<=0 && notQ) {
-                	currentLevelScreen.pause();
+                	((LevelScreen) currentPanel).pause();
                 	notQ=false;
-                	if((currentLevelScreen.getNumQsRemaining()-1)<0)
-                		currentLevelScreen.endGame();
+                	if((((LevelScreen) currentPanel).getNumQsRemaining()-1)<0)
+                		((LevelScreen) currentPanel).endGame();
                 	else
-                		currentLevelScreen.runDeathScenario();
+                		((LevelScreen) currentPanel).runDeathScenario();
                 		
                 }
 
                 Coordinates newBallCoordinates = randomizeCoordinates();
                 MovingVector movingVector = randomizeMovingVector();
                 listEnemies[i] = new Enemy(newBallCoordinates, movingVector, 
-                		2*enemyCollisionRad, listEnemies[i].getEnemyType());
+                		currentScreenType, listEnemies[i].getEnemyType());
             }
 
             listEnemies[i].moveByVector();
@@ -353,17 +400,17 @@ public class Game {
         int yPos;
 
         if(random < 0.25) {
-            xPos = (int) enemySpawnFrame.getXBeginning();
-            yPos = (int)(Math.random()*enemySpawnFrame.getYEnding());
+            xPos = (int) getSpawnXBeginning();
+            yPos = (int)(Math.random()*getSpawnYEnding());
         } else if(random >= 0.25 && random < 0.50) {
-            xPos = (int)(Math.random()*enemySpawnFrame.getXEnding());
-            yPos = (int) enemySpawnFrame.getYBeginning();
+            xPos = (int)(Math.random()*getSpawnXEnding());
+            yPos = (int) getSpawnYBeginning();
         } else if(random >= 0.50 && random < 0.75) {
-            xPos = (int) enemySpawnFrame.getXEnding();
-            yPos = (int) (Math.random()*enemySpawnFrame.getYEnding());
+            xPos = (int) getSpawnXEnding();
+            yPos = (int) (Math.random()*getSpawnYEnding());
         } else {
-            xPos = (int) (Math.random()*enemySpawnFrame.getXEnding());
-            yPos = (int) enemySpawnFrame.getYEnding();
+            xPos = (int) (Math.random()*getSpawnXEnding());
+            yPos = (int) getSpawnYEnding();
         }
 
         randomizedCoordinates = new Coordinates(xPos, yPos);
@@ -396,6 +443,8 @@ public class Game {
 
         double enemyXCoordinates = anEnemy.getCoordinates().getxPos();
         double enemyYCoordinates = anEnemy.getCoordinates().getyPos();
+        
+       int enemyCollisionRad = (int) anEnemy.getEnemyDiameter()/2;
 
         if(player.getCoordinates().getxPos() - playerCollisionRad < enemyXCoordinates + enemyCollisionRad
                 && enemyXCoordinates - enemyCollisionRad < player.getCoordinates().getxPos() + playerCollisionRad
@@ -409,42 +458,18 @@ public class Game {
     
     // Handle winning state
     
+    // uses view
+    
     /**
      * Handles the case that the GameTimer has reached zero, and changes the screen to the next
      * unless it was the last level, in which case it changes the screen to the main menu
      * @author - Team 8
      */
 	public void hasWon(){
-		currentLevelScreen.pause();
-		if(!currentScreenType.equals(Screens.L4))
-		{
-		int choice = JOptionPane.showConfirmDialog(currentLevelScreen, "You've survived the level! Would you like to continue to the next level?", 
-		"You've won!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.YES_NO_OPTION);
-		if(choice==JOptionPane.YES_OPTION){
-			switch(currentScreenType){
-			case L1:{
-				((GameBoard) currentGameView).changeScreenTo(Screens.L2Pre);
-				break;
-			}
-			case L2:{
-				((GameBoard) currentGameView).changeScreenTo(Screens.L3Pre);
-				break;
-			}
-			case L4:{
-				((GameBoard) currentGameView).changeScreenTo(Screens.L4Pre);
-				break;}
-			default:
-				break;
-			}
-		}
+		if(currentPanel!=null)
+		((LevelScreen) currentPanel).hasWon();
 		else
-			((GameBoard) currentGameView).changeScreenTo(Screens.MAIN);
-		}
-		else{
-			JOptionPane.showMessageDialog(currentLevelScreen, "You've completed the last level, "
-					+ "press ok to continue to the main menu!");
-			((GameBoard) currentGameView).changeScreenTo(Screens.MAIN);
-		}
+			System.out.println("You have won the game");
 	}
 	
 	

@@ -1,8 +1,11 @@
 
 package model;
 import java.awt.*;
+import java.util.ArrayList;
 
-public class Player {
+import view.ScreenPanel.Screens;
+
+public class Player extends MoveableObject{
 
 	//Fields
 	
@@ -11,6 +14,7 @@ public class Player {
     private Coordinates coordinates;
 
 	private int playerDiameter;
+	
 
     // Constructor
     
@@ -19,9 +23,9 @@ public class Player {
      * @author - Team 8
      * @param coordinates - the current coordinates for this player
      */
-    public Player(Coordinates coordinates, int imageDiameter) {
+    public Player(Coordinates coordinates, Screens s) {
         this.coordinates = coordinates;
-        playerDiameter = imageDiameter;
+        playerDiameter = calculateMinDiameter(getMoveableDimensions(s, MoveableType.PLAYER));
 
     }
     
