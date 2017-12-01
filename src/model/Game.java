@@ -31,6 +31,7 @@ public class Game {
 	private int numInvasiveEnemy;
 	private int numPollutionEnemy;
 	private boolean notQ=true;
+	private double maxScaleFactor;
     
 	private Player player;
 	private Enemy[] listEnemies;
@@ -472,5 +473,7 @@ public class Game {
 			System.out.println("You have won the game");
 	}
 	
-	
+	public double calculateMaxScaling(int newWidth, int newHeight){
+		return Math.floor(Math.min(newWidth/windowWidth, newHeight/windowHeight));
+		}
 }

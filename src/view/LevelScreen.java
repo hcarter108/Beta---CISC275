@@ -273,11 +273,11 @@ public class LevelScreen extends ScreenPanel {
         	refreshView();
         	JOptionPane.showMessageDialog(parent, "<html><center>If your health goes to zero, you can answer a question correctly <br>to get a new life, but there are only 4 questions per level</center></html>");
     	    
-        	JLabel instructionsLabel = new JLabel("Select the correct answer to restore all health");
-        	JButton ans1 = new JButton("Sample Correct Answer (CLICK ME)");
-    	    JButton ans2 = new JButton("Sample Incorrect Answer");
-    	    JButton ans3 = new JButton("Sample Incorrect Answer");
-    	    JButton ans4 = new JButton("Sample Incorrect Answer");
+        	JLabel instructionsLabel = new JLabel("How do you move your player?");
+        	JButton ans1 = new JButton("By sliding the mouse towards where you want to go");
+    	    JButton ans2 = new JButton("By clicking random buttons");
+    	    JButton ans3 = new JButton("By using arrow keys");
+    	    JButton ans4 = new JButton("By doing nothing");
         	
         	JFrame window = new JFrame("A sample question");
             JPanel panel = new JPanel(new GridBagLayout());
@@ -296,16 +296,26 @@ public class LevelScreen extends ScreenPanel {
             c.gridy = 4;
         	panel.add(ans4, c);;
             window.add(panel);
-            window.setSize(250, 270);
+            window.setSize(350, 270);
             window.setResizable(false);
         	window.setLocationRelativeTo(null);
             window.setVisible(true);
             window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            
+    		window.addWindowListener(new java.awt.event.WindowAdapter() {
+    		    @Override
+    		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                	currentGame.getHealthBar().setCurrentPoints(1000);
+                	refreshView();
+            		unpause();
+    		        }
+    		    
+    		});
 
             ans1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	JOptionPane.showMessageDialog(parent, "That is correct! Press ok to resume");
+                	JOptionPane.showMessageDialog(parent, "That is correct! Goob job");
                 	currentGame.getHealthBar().setCurrentPoints(1000);
                 	refreshView();
                 	window.setVisible(false);
@@ -369,14 +379,7 @@ public class LevelScreen extends ScreenPanel {
                 	window.setVisible(false);
                 }
             });
-            
-    		window.addWindowListener(new java.awt.event.WindowAdapter() {
-    		    @Override
-    		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-    		    	unpause();
-    		        }
-    		    
-    		});
+           
     	}
 		if(seconds==11){
 			pause();
@@ -530,6 +533,8 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 */
 	public void generateRandomQ(){
+		
+		if(currentScreen!=Screens.TUTORIAL){
 		int rand = generateRandomRangeQsRemaining();
 
 		int unusedIndex = possibleIndices.get(rand);
@@ -628,6 +633,7 @@ public class LevelScreen extends ScreenPanel {
 		        }
 		    
 		});
+	}
 	}
 	
 	public void hasWon(){

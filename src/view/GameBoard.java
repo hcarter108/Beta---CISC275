@@ -28,8 +28,12 @@ public class GameBoard extends JFrame implements ActionListener {
 	private JPanel currentScreen;
 	private static JMenuBar customJMenuBar;
 	
+	private int currentWidth;
+	private int currentHeight;
+	private boolean isBaseDimension=true;
 	private boolean isGame = false;
 	private boolean isPaused = false;
+
 	
 	//Constructor
 
@@ -82,6 +86,12 @@ public class GameBoard extends JFrame implements ActionListener {
 	 */
 	public void setDifficulty(DifficultyLVL difficulty) {
 		this.difficulty = difficulty;
+	}
+	
+	public int[] getDimensions(){
+		int[] dimensions = new int[] {currentWidth, currentHeight};
+		return dimensions;
+		
 	}
 	
 	/**

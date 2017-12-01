@@ -46,7 +46,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		bgImage = uploadImage(s.name());
 		buildTitleScreen();
-		uploadAndPlaySound("2001 A Space Odyssey Opening.wav");
+		chooseRandomSong();
 		setVisible(true);
 		}
 	
@@ -75,6 +75,16 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		repaint();
 	}
 	
+	// just placeholders
+	public void chooseRandomSong(){
+		double rand = Math.random();
+		if(rand<(double) 1/3)
+			uploadAndPlaySound("Ride of the Valkyries.wav");
+		else if ((double) 1/3<=rand && rand<(double) 2/3)
+			uploadAndPlaySound("2001 A Space Odyssey Opening.wav");
+		else 
+			uploadAndPlaySound("Sympathy For The Devil.wav");
+	}
 	//Override of paintComponent()
 	
 	/**
