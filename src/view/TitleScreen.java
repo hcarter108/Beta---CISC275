@@ -78,12 +78,10 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 	// just placeholders
 	public void chooseRandomSong(){
 		double rand = Math.random();
-		if(rand<(double) 1/3)
+		if(rand<.5)
 			uploadAndPlaySound("Ride of the Valkyries.wav");
-		else if ((double) 1/3<=rand && rand<(double) 2/3)
-			uploadAndPlaySound("2001 A Space Odyssey Opening.wav");
 		else 
-			uploadAndPlaySound("Sympathy For The Devil.wav");
+			uploadAndPlaySound("2001 A Space Odyssey Opening.wav");
 	}
 	//Override of paintComponent()
 	
