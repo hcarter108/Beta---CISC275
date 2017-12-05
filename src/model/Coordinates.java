@@ -12,8 +12,8 @@ public class Coordinates {
     /**
      * Constructor for Coordinates
      * @author - Team 8
-     * @param x
-     * @param y
+     * @param x - the x-coordinate
+     * @param y - the y-coordinate
      */
     public Coordinates(double x, double y) {
         this.xPos = x;

@@ -184,7 +184,7 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 	/** Takes a JComponent and sets certain parameters, such as color. Is used to standardize 
 	 * the appearance of the components
 	 * @author - Team 8
-	 * @param component
+	 * @param component - The JComponent that will have its appearance modified
 	 */
 	public void initLabelAppearance(JComponent component){
 		component.setForeground(Color.WHITE);
@@ -212,6 +212,7 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 	/** Implements the method actionPerformed from ActionListener, switches from this PreLevelScreen
 	 *  to the relevant LevelScreen
 	 * @author - Team 8
+	 * @param e - The ActionEvent that was performed
 	 */
 	public void actionPerformed(ActionEvent e){
 		switch(currentScreen){

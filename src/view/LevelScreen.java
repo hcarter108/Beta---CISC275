@@ -636,6 +636,12 @@ public class LevelScreen extends ScreenPanel {
 	}
 	}
 	
+	/**
+	 * This handles what happens when the player wins a level. It switches to the
+	 * correct next level screen or to the main menu, depending on what the user chooses
+	 * and which level they just won.
+	 * @author - Team 8
+	 */
 	public void hasWon(){
 		pause();
 		if(!currentScreen.equals(Screens.L4))

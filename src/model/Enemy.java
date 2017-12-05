@@ -24,8 +24,8 @@ public class Enemy extends MoveableObject{
      * @author - Team 8
      * @param coordinates - Current coordinates of the enemy
      * @param movingVector - The direction vector for this Enemy 
-     * @param imageDiameter - The diameter of the image painted on the screen by EnemyView
-     * @param b - a check on whether or not this is an invasive species instance, true means it is, false means it's a pollution enemy
+     * @param s - The screen that the enemy is on
+     * @param type - Denotes the type of enemy, pollution or invasive
      */
     public Enemy(Coordinates coordinates, MovingVector movingVector, Screens s, MoveableType type) {
         this.coordinates = coordinates;

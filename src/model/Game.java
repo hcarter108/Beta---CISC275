@@ -46,8 +46,7 @@ public class Game {
     /**
      * Constructor for Game
      * @author - Team 8
-     * @param boardView - the current GameBoard instance
-     * @param panel - the current Level, an instance of LevelScreen
+     * @param screenType - The screen type that this game is using
      * @param d - the difficulty of this game, from enum DifficultyLVL
      */
 	public Game(Screens screenType, DifficultyLVL d){

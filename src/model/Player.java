@@ -22,6 +22,7 @@ public class Player extends MoveableObject{
      * Constructor for player
      * @author - Team 8
      * @param coordinates - the current coordinates for this player
+     * @param s - the screen that the player is in
      */
     public Player(Coordinates coordinates, Screens s) {
         this.coordinates = coordinates;
