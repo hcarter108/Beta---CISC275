@@ -31,14 +31,13 @@ public class Game {
 	private int numInvasiveEnemy;
 	private int numPollutionEnemy;
 	private boolean notQ=true;
-	private double maxScaleFactor;
 	private double scaleFactor = 1;
     
 	private Player player;
 	private Enemy[] listEnemies;
     private HealthBar hb;
     private GameTimer gt;
-    private final ArrayList<Coordinates> randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
+    private ArrayList<Coordinates> randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
     		new Coordinates(windowWidth + 50, windowHeight + 50));
 	
 
@@ -151,6 +150,14 @@ public class Game {
 	
 	public double getScaleFactor(){
 		return scaleFactor;
+	}
+	
+	public void setBoardInfo(int width, int height, double scale){
+		windowWidth = width;
+		windowHeight = height;
+		scaleFactor = scale;
+		randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
+	    		new Coordinates(windowWidth + 50, windowHeight + 50));
 	}
 	
 	/**

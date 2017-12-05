@@ -45,8 +45,6 @@ public class LevelScreen extends ScreenPanel {
 	private LevelScreen thisLevel;
 	private ArrayList<JButton> arrayOfAnswerButtons = new ArrayList<JButton>();
 	
-	private int DEFAULT_WIDTH = 800;
-	private int DEFAULT_HEIGHT = 600;
 	private int board_Width;
 	private int board_Height;
 	private int numLinesPreLevel = 8;
@@ -90,6 +88,11 @@ public class LevelScreen extends ScreenPanel {
 		this.setOpaque(true);
 		this.parent = parent;
 		currentScreen = s;
+		board_Width = parent.getWidth();
+		board_Height = parent.getHeight();
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
+		this.setPreferredSize(new Dimension(board_Width, board_Height));
+		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		if(currentScreen!=Screens.TUTORIAL){
 			difficulty = ((GameBoard) parent).getDifficulty();
 			initIndexingSets();
@@ -99,8 +102,6 @@ public class LevelScreen extends ScreenPanel {
 			difficulty = DifficultyLVL.TUTORIAL;
 		thisLevel = this;
 		initImageIcons();
-		this.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		repaint();
 		this.setVisible(true);
 		initGame(difficulty);
@@ -186,6 +187,7 @@ public class LevelScreen extends ScreenPanel {
 		board_Width = boardWidth;
 		board_Height = boardHeight;
 		this.scaleFactor = scaleFactor;
+		currentGame.setBoardInfo(boardWidth, boardHeight, scaleFactor);
 	}
 	
 	/**
@@ -209,7 +211,7 @@ public class LevelScreen extends ScreenPanel {
 			}
 		});
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(Box.createRigidArea(new Dimension(10, DEFAULT_HEIGHT-100)));
+		add(Box.createRigidArea(new Dimension(10, board_Height-100)));
 		add(pause);
 		pause.setVisible(true);
 }

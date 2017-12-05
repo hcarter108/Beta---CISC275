@@ -84,6 +84,10 @@ public class GameBoard extends JFrame implements ActionListener {
 		return isGame;
 	}
 	
+	public double getScaleFactor(){
+		return scaleFactor;
+	}
+	
 	/**
 	 * Getter for the difficulty of the current game, from enum DifficultyLVL
 	 * @author - Team 8
@@ -148,6 +152,7 @@ public class GameBoard extends JFrame implements ActionListener {
 		Dimension computer = Toolkit.getDefaultToolkit().getScreenSize();
 		currentWidth = (int) computer.getWidth();
 		currentHeight = (int) computer.getHeight();
+		updateScale();
         setSize(currentWidth, currentHeight);
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setLocationRelativeTo(null);
@@ -156,6 +161,7 @@ public class GameBoard extends JFrame implements ActionListener {
 		initMenuBar();
 		setJMenuBar(customJMenuBar);
 		currentScreen = new TitleScreen(Screens.TITLE, this);
+		communicate();
 		add(currentScreen);
 		setVisible(true);
 	}
@@ -382,7 +388,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	}
 	
 	private void communicate(){
-		(LevelScreen) currentScreen.receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
+		((LevelScreen) currentScreen).receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
 	}
 }
 

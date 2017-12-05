@@ -29,8 +29,9 @@ import view.ScreenPanel.Screens;
 public class TitleScreen extends ScreenPanel implements ActionListener{
 	
 	private Image bgImage;
-	private int DEFAULT_WIDTH = 800;
-	private int DEFAULT_HEIGHT = 600;
+	private int board_Width;
+	private int board_Height;
+	private double scaleFactor;
 	private JFrame parentBoard;
 	
 	/**
@@ -42,8 +43,11 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 	public TitleScreen(Screens s, JFrame parent){
 		super();
 		parentBoard = parent;
-		this.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT ));
-		this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+		board_Width = parent.getWidth();
+		board_Height = parent.getHeight();
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
+		this.setPreferredSize(new Dimension(board_Width, board_Height));
+		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		bgImage = uploadImage(s.name());
 		buildTitleScreen();
 		chooseRandomSong();
@@ -62,7 +66,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		
 		JLabel title = new JLabel("Estuary Survival");
 		title.setFont(new Font("Calibri", Font.BOLD, 100));
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/5)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/5)));
 		this.add(title);
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
@@ -70,7 +74,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		start.setAlignmentX(Component.CENTER_ALIGNMENT);
 		start.setFont(new Font("Calibri", Font.BOLD, 40));
 		start.addActionListener(this);
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/8)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/8)));
 		this.add(start);
 		repaint();
 	}
@@ -109,4 +113,9 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		((GameBoard) parentBoard).changeScreenTo(Screens.MAIN);
 	}
 	
+	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
+		board_Width = boardWidth;
+		board_Height = boardHeight;
+		this.scaleFactor = scaleFactor;
+	}
 }

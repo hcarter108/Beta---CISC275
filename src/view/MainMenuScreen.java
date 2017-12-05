@@ -34,8 +34,9 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 	private JButton l3;
 	private JButton l4;
 	
-	private int DEFAULT_WIDTH = 800;
-	private int DEFAULT_HEIGHT = 600;
+	private int board_Width;
+	private int board_Height;
+	private double scaleFactor;
 	
 	private Image bgImage;
 	
@@ -50,9 +51,12 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 	public MainMenuScreen(Screens s, JFrame parent){
 		super();
 		parentBoard = parent;
+		board_Width = parent.getWidth();
+		board_Height = parent.getHeight();
+		this.setPreferredSize(new Dimension(board_Width, board_Height));
+		this.setMinimumSize(new Dimension(board_Width, board_Height));
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
 		bgImage = uploadImage(s.name());
-		this.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT ));
-		this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		buildMainMenuScreen();
 		repaint();
 		this.setVisible(true);
@@ -71,13 +75,13 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		main.setAlignmentX(Component.LEFT_ALIGNMENT);
 		main.setFont(new Font("Calibri", Font.PLAIN, 60));
 		add(main);
-		add(Box.createRigidArea(new Dimension(20,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(20,(int)board_Height/40)));
 		
 		JLabel campaign = new JLabel("Campaign");
 		campaign.setFont(new Font("Calibri", Font.PLAIN, 36));
 		add(campaign);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		start = new JButton("Begin Campaign");
 		start.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -85,13 +89,13 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		start.setActionCommand("start");
 		this.add(start);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		JLabel lvlSelect = new JLabel("Level Select");
 		lvlSelect.setFont(new Font("Calibri", Font.PLAIN, 36));
 		this.add(lvlSelect);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		l1 = new JButton("Level 1 (BlackBird Creek Part I)");
 		l1.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -99,7 +103,7 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		l1.setActionCommand("l1");
 		this.add(l1);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		l2 = new JButton("Level 2 (BlackBird Creek Part II)");
 		l2.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -107,7 +111,7 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		l2.setActionCommand("l2");
 		this.add(l2);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		l3 = new JButton("Level 3 (St. Jones River Part I)");
 		l3.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -115,7 +119,7 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		l3.setActionCommand("l3");
 		this.add(l3);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		l4 = new JButton("Level 4 (St. Jones River Part II)");
 		l4.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -123,13 +127,13 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		l4.setActionCommand("l4");
 		this.add(l4);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		JLabel tutorial = new JLabel("Tutorial");
 		tutorial.setFont(new Font("Calibri", Font.PLAIN, 36));
 		this.add(tutorial);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)DEFAULT_HEIGHT/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
 		
 		JButton tutorialButton = new JButton("Begin Tutorial");
 		tutorialButton.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -258,6 +262,12 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 				break;
 			}
 		}
+	}
+	
+	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
+		board_Width = boardWidth;
+		board_Height = boardHeight;
+		this.scaleFactor = scaleFactor;
 	}
 
 

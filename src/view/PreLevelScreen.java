@@ -34,6 +34,9 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 	
 	private int DEFAULT_WIDTH = 800;
 	private int DEFAULT_HEIGHT = 600;
+	private int board_Width;
+	private int board_Height;
+	private double scaleFactor;
 	private String levelSetting;
 	private String settingINFO;
 	private String playerINFO;
@@ -57,9 +60,12 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 	public PreLevelScreen(Screens s, JFrame parent){
 		super();
 		currentScreen = s;
-		this.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT ));
-		this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		parentBoard = parent;
+		board_Width = parent.getWidth();
+		board_Height = parent.getHeight();
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
+		this.setPreferredSize(new Dimension(board_Width, board_Height));
+		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		bgImage = uploadImage(s.name());
 		initAssociatedLevel(s);
 		cnfgFieldsFromTXT(s);
@@ -119,9 +125,9 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 	 * @author - Team 8
 	 */
 	public void initImageIcons(){
-		playerIMG = new ImageIcon(uploadImage(associatedLevel.name()+"PLAYER"));
-		invasiveIMG = new  ImageIcon(uploadImage(associatedLevel.name()+"INVASIVE"));
-		pollutionIMG = new ImageIcon(uploadImage(associatedLevel.name()+"POLLUTION"));
+		playerIMG = new ImageIcon(scale(uploadImage(associatedLevel.name()+"PLAYER"), scaleFactor));
+		invasiveIMG = new  ImageIcon(scale(uploadImage(associatedLevel.name()+"INVASIVE"), scaleFactor));
+		pollutionIMG = new ImageIcon(scale(uploadImage(associatedLevel.name()+"POLLUTION"), scaleFactor));
 	}
 	
 	/** Initializes the view for this instance of PreLevelScreen, such as setting a LayoutManager,
@@ -150,17 +156,17 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		this.setLayout(col);
 		start.addActionListener(this);
 		start.setActionCommand("start");
-		add(Box.createRigidArea(new Dimension(10,30)));
+		add(Box.createRigidArea(new Dimension(10,(int) (30*scaleFactor))));
 		this.add(levelLabel);
-		add(Box.createRigidArea(new Dimension(10,30)));
+		add(Box.createRigidArea(new Dimension(10,(int) (30*scaleFactor))));
 		this.add(levelTXT);
-		add(Box.createRigidArea(new Dimension(10,60)));
+		add(Box.createRigidArea(new Dimension(10,(int) (60*scaleFactor))));
 		this.add(playerLabel);
-		add(Box.createRigidArea(new Dimension(10,60)));
+		add(Box.createRigidArea(new Dimension(10,(int) (60*scaleFactor))));
 		this.add(invasiveLabel);
-		add(Box.createRigidArea(new Dimension(10,60)));
+		add(Box.createRigidArea(new Dimension(10,(int) (60*scaleFactor))));
 		this.add(pollutionLabel);
-		add(Box.createRigidArea(new Dimension(10,40)));
+		add(Box.createRigidArea(new Dimension(10,(int) (40*scaleFactor))));
 		this.add(start);
 		
 	}
@@ -235,5 +241,10 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		}
 	}
 	
+	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
+		board_Width = boardWidth;
+		board_Height = boardHeight;
+		this.scaleFactor = scaleFactor;
+	}
 	
 }
