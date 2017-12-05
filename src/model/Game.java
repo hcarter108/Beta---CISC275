@@ -32,6 +32,7 @@ public class Game {
 	private int numPollutionEnemy;
 	private boolean notQ=true;
 	private double maxScaleFactor;
+	private double scaleFactor = 1;
     
 	private Player player;
 	private Enemy[] listEnemies;
@@ -142,6 +143,14 @@ public class Game {
 	 */
 	public void setGameObjSpeed(int enemySpeed) {
 		this.gameObjSpeed = enemySpeed;
+	}
+	
+	public void setScaleFactor(double scaleFactor){
+		this.scaleFactor = scaleFactor;
+	}
+	
+	public double getScaleFactor(){
+		return scaleFactor;
 	}
 	
 	/**
@@ -330,8 +339,8 @@ public class Game {
         
         player.setDirectionAngle(angle);
 
-        double x = (gameObjSpeed * Math.cos(Math.toRadians(angle)));
-        double y = (gameObjSpeed * Math.sin(Math.toRadians(angle)));
+        double x = (gameObjSpeed * scaleFactor *  Math.cos(Math.toRadians(angle)));
+        double y = (gameObjSpeed * scaleFactor *  Math.sin(Math.toRadians(angle)));
 
         player.moveByVector(new MovingVector(x, y));
 
@@ -426,8 +435,8 @@ public class Game {
      */
     private MovingVector randomizeMovingVector() {
         double angle = Math.random() * 360;
-        double x = (gameObjSpeed * Math.cos(Math.toRadians(angle)));
-        double y = (gameObjSpeed * Math.sin(Math.toRadians(angle)));
+        double x = (gameObjSpeed * scaleFactor * Math.cos(Math.toRadians(angle)));
+        double y = (gameObjSpeed * scaleFactor * Math.sin(Math.toRadians(angle)));
 
         MovingVector movingVector = new MovingVector(x, y);
         return movingVector;

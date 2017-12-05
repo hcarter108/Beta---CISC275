@@ -47,11 +47,14 @@ public class LevelScreen extends ScreenPanel {
 	
 	private int DEFAULT_WIDTH = 800;
 	private int DEFAULT_HEIGHT = 600;
+	private int board_Width;
+	private int board_Height;
 	private int numLinesPreLevel = 8;
 	private int numQs = 4;
 	private int numQsRemaining=4;
 	private int numCorrectAns = 4;
 	private int numIncorrectAnsPerQ = 3;
+	private double scaleFactor = 1;
 	
 	private ArrayList<String> listQuestions = new ArrayList<String>();
 	private ArrayList<String> listCorrectAns = new ArrayList<String>();
@@ -177,6 +180,12 @@ public class LevelScreen extends ScreenPanel {
 		pause();
 		JOptionPane.showMessageDialog(parent, "Click ok to start");
 		unpause();
+	}
+	
+	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
+		board_Width = boardWidth;
+		board_Height = boardHeight;
+		this.scaleFactor = scaleFactor;
 	}
 	
 	/**

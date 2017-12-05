@@ -52,5 +52,9 @@ public void uploadAndPlaySound(String s){
 	helperObject.uploadAndPlaySound(s);
 }
 
+public Image scale(Image img, double scaleFactor){
+	return img.getScaledInstance((int) (img.getWidth(null)*scaleFactor), (int) (img.getHeight(null)*scaleFactor), Image.SCALE_DEFAULT);
+}
+
 
 }

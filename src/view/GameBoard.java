@@ -1,8 +1,12 @@
 package view;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +34,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	
 	private int currentWidth;
 	private int currentHeight;
+	private double scaleFactor = 1;
 	private boolean isBaseDimension=true;
 	private boolean isGame = false;
 	private boolean isPaused = false;
@@ -45,6 +50,15 @@ public class GameBoard extends JFrame implements ActionListener {
 	public GameBoard()
 	{
 		super("Estuary Survival");
+		this.addComponentListener(new ComponentAdapter( ) {
+			  public void componentResized(ComponentEvent ev) {
+				  Dimension newSize = ev.getComponent().getBounds().getSize(); 
+				  currentWidth = (int) newSize.getWidth();
+				  currentHeight = (int) newSize.getHeight();
+				  updateScale();
+				  communicate();
+				  }
+				});
 	}
 	
 	//Getters and Setters
@@ -131,7 +145,11 @@ public class GameBoard extends JFrame implements ActionListener {
 	 */
 	public void start()
 	{
-        setSize(800, 600);
+		Dimension computer = Toolkit.getDefaultToolkit().getScreenSize();
+		currentWidth = (int) computer.getWidth();
+		currentHeight = (int) computer.getHeight();
+        setSize(currentWidth, currentHeight);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setLocationRelativeTo(null);
         setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -140,6 +158,14 @@ public class GameBoard extends JFrame implements ActionListener {
 		currentScreen = new TitleScreen(Screens.TITLE, this);
 		add(currentScreen);
 		setVisible(true);
+	}
+	
+	/**
+	 * @author - Team 8
+	 * @return
+	 */
+	private void updateScale(){
+		scaleFactor = Math.min(currentWidth/800, currentHeight/600);
 	}
 	
 	/**
@@ -353,6 +379,10 @@ public class GameBoard extends JFrame implements ActionListener {
 		}
 		if (isGame)
 			((LevelScreen) currentScreen).unpause();
+	}
+	
+	private void communicate(){
+		(LevelScreen) currentScreen.receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
 	}
 }
 
