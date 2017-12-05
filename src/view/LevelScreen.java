@@ -652,9 +652,10 @@ public class LevelScreen extends ScreenPanel {
 				((GameBoard) parent).changeScreenTo(Screens.L3Pre);
 				break;
 			}
-			case L4:{
+			case L3:{
 				((GameBoard) parent).changeScreenTo(Screens.L4Pre);
-				break;}
+				break;
+			}
 			default:
 				break;
 			}

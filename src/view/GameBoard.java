@@ -354,6 +354,5 @@ public class GameBoard extends JFrame implements ActionListener {
 		if (isGame)
 			((LevelScreen) currentScreen).unpause();
 	}
-	}
-
+}
 

@@ -48,15 +48,17 @@ public class EnemyView {
 	 * Draws the Enemy on-screen
 	 * 
 	 * @author - Team 8
-	 * @param g
-	 *            - an instance of Graphics used internally by Java
+	 * @param g - an instance of Graphics used internally by Java
 	 */
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform at = AffineTransform.getTranslateInstance((coordinates.getxPos() - enemyDiameter / 2),
 				(coordinates.getyPos() - enemyDiameter / 2));
-		at.rotate(Math.toRadians(enemyData.getMovingAngle() + 90));
+		at.rotate(Math.toRadians(enemyData.getMovingAngle() + 90), enemyDiameter/2, enemyDiameter/2);
 		g2.drawImage(enemyGraphic, at, null);
+		//debug stuff below, shows the hitbox as a red circle:
+		//g2.setColor(Color.RED);
+		//g2.drawOval((int)coordinates.getxPos()-enemyDiameter/2, (int)coordinates.getyPos()-enemyDiameter/2, enemyDiameter, enemyDiameter);
 	}
 
 }

@@ -447,10 +447,9 @@ public class Game {
         
        int enemyCollisionRad = (int) anEnemy.getEnemyDiameter()/2;
 
-        if(player.getCoordinates().getxPos() - playerCollisionRad < enemyXCoordinates + enemyCollisionRad
-                && enemyXCoordinates - enemyCollisionRad < player.getCoordinates().getxPos() + playerCollisionRad
-                && player.getCoordinates().getyPos() - playerCollisionRad < enemyYCoordinates + enemyCollisionRad
-                && player.getCoordinates().getyPos() + playerCollisionRad > enemyYCoordinates - enemyCollisionRad) {
+        if (Math.sqrt(Math.pow(player.getCoordinates().getxPos() - enemyXCoordinates, 2) 
+        		+ Math.pow(player.getCoordinates().getyPos() - enemyYCoordinates, 2)) 
+        		< playerCollisionRad + enemyCollisionRad) {
             return true;
         }
         return false;
