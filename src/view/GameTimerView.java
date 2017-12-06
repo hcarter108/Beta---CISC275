@@ -15,8 +15,8 @@ public class GameTimerView {
 	final private int height = 20;
 	private int maxTime;
 	private int timeRemaining;
-	final private int drawPosX = 600;
-	final private int drawPosY = 500;
+	final private int drawPosX;
+	final private int drawPosY;
 	
 	private GameTimer gt;
 	
@@ -27,8 +27,10 @@ public class GameTimerView {
 	 * @author - Team 8
 	 * @param gt - an instance of GameTimer
 	 */
-    public GameTimerView(GameTimer gt){
+    public GameTimerView(GameTimer gt, int xPos, int yPos){
     	this.gt=gt;
+    	drawPosX = xPos-width-100;
+    	drawPosY = yPos-height-100;
     	maxTime = gt.getMaxTime();
     	timeRemaining = gt.getTimeRemaining();
     }

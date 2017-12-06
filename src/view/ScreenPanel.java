@@ -59,4 +59,8 @@ public Image scale(Image img, double scaleFactor){
 public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 }
 
+public Screens getScreenType(){
+	return null;
+}
+
 }

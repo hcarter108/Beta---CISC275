@@ -50,15 +50,6 @@ public class GameBoard extends JFrame implements ActionListener {
 	public GameBoard()
 	{
 		super("Estuary Survival");
-		this.addComponentListener(new ComponentAdapter( ) {
-			  public void componentResized(ComponentEvent ev) {
-				  Dimension newSize = ev.getComponent().getBounds().getSize(); 
-				  currentWidth = (int) newSize.getWidth();
-				  currentHeight = (int) newSize.getHeight();
-				  updateScale();
-				  communicate();
-				  }
-				});
 	}
 	
 	//Getters and Setters
@@ -84,6 +75,13 @@ public class GameBoard extends JFrame implements ActionListener {
 		return isGame;
 	}
 	
+	public int getCurrentWidth(){
+		return currentWidth;
+	}
+	
+	public int getCurrentHeight(){
+		return currentHeight;
+	}
 	public double getScaleFactor(){
 		return scaleFactor;
 	}
@@ -153,10 +151,20 @@ public class GameBoard extends JFrame implements ActionListener {
 		currentWidth = (int) computer.getWidth();
 		currentHeight = (int) computer.getHeight();
 		updateScale();
+		System.out.println(scaleFactor);
         setSize(currentWidth, currentHeight);
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        this.addComponentListener(new ComponentAdapter( ) {
+			  public void componentResized(ComponentEvent ev) {
+				  Dimension newSize = ev.getComponent().getBounds().getSize(); 
+				  currentWidth = (int) newSize.getWidth();
+				  currentHeight = (int) newSize.getHeight();
+				  updateScale();
+				  communicate();
+				  }
+				});
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initMenuBar();
 		setJMenuBar(customJMenuBar);
@@ -171,7 +179,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	 * @return
 	 */
 	private void updateScale(){
-		scaleFactor = Math.min(currentWidth/800, currentHeight/600);
+		scaleFactor = Math.min((float)currentWidth/800, (float)currentHeight/600);
 	}
 	
 	/**
@@ -388,7 +396,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	}
 	
 	private void communicate(){
-		((LevelScreen) currentScreen).receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
+		((ScreenPanel) currentScreen).receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
 	}
 }
 

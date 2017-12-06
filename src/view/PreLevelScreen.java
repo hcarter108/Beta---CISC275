@@ -66,7 +66,7 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		scaleFactor = ((GameBoard) parent).getScaleFactor();
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
-		bgImage = uploadImage(s.name());
+		bgImage = initBGImage();
 		initAssociatedLevel(s);
 		cnfgFieldsFromTXT(s);
 		initImageIcons();
@@ -95,6 +95,10 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		this.difficulty = difficulty;
 	}
 	
+	@Override
+	public Screens getScreenType(){
+		return currentScreen;
+	}
 	// Functions to initialize parameters and display
 
 	/** Ininitalizes the field associatedLevel, which is used in other functions, in particular
@@ -120,6 +124,12 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		}
 		
 	}
+	
+	public Image initBGImage(){
+		Image img = uploadImage(currentScreen.name());
+		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
+	}
+	
 	
 	/** Initializes the images to be used in the JLabels for the player, invasive, and pollution Objects
 	 * @author - Team 8

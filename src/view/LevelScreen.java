@@ -152,6 +152,7 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 * @return - this instance of LevelScreen's ScreenType, from enum ScreenType
 	 */
+	@Override
 	public Screens getScreenType(){
 		return currentScreen;
 	}
@@ -229,10 +230,10 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 */
 	public void initImageIcons() {
-		bgImage = uploadImage(currentScreen.name());
-		playerIMG = uploadImage(currentScreen.name() + "PLAYER");
-		invasiveIMG = uploadImage(currentScreen.name() + "INVASIVE");
-		pollutionIMG = uploadImage(currentScreen.name() + "POLLUTION");
+		bgImage = uploadImage(currentScreen.name()).getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
+		playerIMG = scale(uploadImage(currentScreen.name() + "PLAYER"), scaleFactor);
+		invasiveIMG = scale(uploadImage(currentScreen.name() + "INVASIVE"), scaleFactor);
+		pollutionIMG = scale(uploadImage(currentScreen.name() + "POLLUTION"), scaleFactor);
 	}
 	
 	/**
@@ -423,7 +424,7 @@ public class LevelScreen extends ScreenPanel {
 	 * @param g - an instance of Graphics used internally by Java
 	 */
 	private void paintGameTimer(Graphics g){
-		GameTimerView gtv = new GameTimerView(currentGame.getGameTimer());
+		GameTimerView gtv = new GameTimerView(currentGame.getGameTimer(), board_Width, board_Height);
 		gtv.drawBar(g);
 	}
 

@@ -56,11 +56,16 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		scaleFactor = ((GameBoard) parent).getScaleFactor();
-		bgImage = uploadImage(s.name());
+		bgImage = initBGImage();
 		buildMainMenuScreen();
 		repaint();
 		this.setVisible(true);
 		}
+	
+	@Override
+	public Screens getScreenType(){
+		return Screens.MAIN;
+	}
 	
 	// Initialization of display and other display functions
 	
@@ -140,6 +145,11 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		tutorialButton.addActionListener(this);
 		tutorialButton.setActionCommand("tutorial");
 		this.add(tutorialButton);
+	}
+	
+	public Image initBGImage(){
+		Image img = uploadImage(Screens.MAIN.name());
+		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
 	}
 	
 	/**

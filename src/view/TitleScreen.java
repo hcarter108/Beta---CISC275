@@ -31,7 +31,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 	private Image bgImage;
 	private int board_Width;
 	private int board_Height;
-	private double scaleFactor;
+	private double scaleFactor = 1;
 	private JFrame parentBoard;
 	
 	/**
@@ -43,17 +43,23 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 	public TitleScreen(Screens s, JFrame parent){
 		super();
 		parentBoard = parent;
-		board_Width = parent.getWidth();
-		board_Height = parent.getHeight();
-		scaleFactor = ((GameBoard) parent).getScaleFactor();
+		board_Width = ((GameBoard) parent).getCurrentWidth();
+		board_Height = ((GameBoard) parent).getCurrentHeight();
+//		scaleFactor = ((GameBoard) parent).getScaleFactor();
+		System.out.println(scaleFactor);
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
-		bgImage = uploadImage(s.name());
+		bgImage = initBGImage();
 		buildTitleScreen();
 		chooseRandomSong();
 		setVisible(true);
 		}
 	
+	
+	@Override
+	public Screens getScreenType(){
+		return Screens.TITLE;
+	}
 	//Initialization of display
 	
 	/**
@@ -77,6 +83,11 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		add(Box.createRigidArea(new Dimension(0,(int)board_Height/8)));
 		this.add(start);
 		repaint();
+	}
+	
+	public Image initBGImage(){
+		Image img = uploadImage(Screens.TITLE.name());
+		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
 	}
 	
 	// just placeholders
