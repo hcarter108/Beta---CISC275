@@ -167,6 +167,7 @@ public class LevelScreen extends ScreenPanel {
 	public void initGame(DifficultyLVL d){
 		currentGame = new Game(currentScreen,d);
 		currentGame.setPanelForCommunication(this);
+		currentGame.setBoardInfo(board_Width, board_Height, scaleFactor);
 	}
 
 	/**

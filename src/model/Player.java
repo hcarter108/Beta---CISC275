@@ -15,6 +15,7 @@ public class Player extends MoveableObject{
 
 	private int playerDiameter;
 	
+	private double scaleFactor=1;
 
     // Constructor
     
@@ -41,6 +42,9 @@ public class Player extends MoveableObject{
 		return directionAngle;
 	}
 
+    public void setScaleFactor(double factor){
+    	scaleFactor = factor;
+    }
     /**
      * Sets the direction of the player, an angle from the horizontal
      * @author - Team 8
@@ -77,8 +81,8 @@ public class Player extends MoveableObject{
 	 * @param movingVector - the displacement vector of this player
 	 */
     public void moveByVector(MovingVector movingVector) {
-        double xPos = coordinates.getxPos() + movingVector.getX();
-        double yPos = coordinates.getyPos() + movingVector.getY();
+        double xPos = coordinates.getxPos() + scaleFactor*movingVector.getX();
+        double yPos = coordinates.getyPos() + scaleFactor*movingVector.getY();
 
         coordinates = new Coordinates(xPos, yPos);
     }

@@ -11,7 +11,7 @@ public class GameTimerView {
 	
 	//Fields
 	
-	final private int width = 100;
+	final private int width = 180;
 	final private int height = 20;
 	private int maxTime;
 	private int timeRemaining;

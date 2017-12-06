@@ -61,8 +61,8 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		super();
 		currentScreen = s;
 		parentBoard = parent;
-		board_Width = parent.getWidth();
-		board_Height = parent.getHeight();
+		board_Width = ((GameBoard) parent).getCurrentWidth();
+		board_Height = ((GameBoard) parent).getCurrentHeight();
 		scaleFactor = ((GameBoard) parent).getScaleFactor();
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));

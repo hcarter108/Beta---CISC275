@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -25,8 +26,8 @@ public class Game {
     
 	private int numEnemies;
 	private int gameObjSpeed;
-    private int windowWidth = 800;
-    private int windowHeight = 600;
+    private int windowWidth=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private int windowHeight=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private int playerCollisionRad;
 	private int numInvasiveEnemy;
 	private int numPollutionEnemy;
@@ -38,7 +39,8 @@ public class Game {
     private HealthBar hb;
     private GameTimer gt;
     private ArrayList<Coordinates> randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
-    		new Coordinates(windowWidth + 50, windowHeight + 50));
+
+    		new Coordinates(windowWidth + 50, windowHeight + 50));;
 	
 
     //Constructor
@@ -158,6 +160,7 @@ public class Game {
 		scaleFactor = scale;
 		randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
 	    		new Coordinates(windowWidth + 50, windowHeight + 50));
+		player.setScaleFactor(scaleFactor);
 	}
 	
 	/**

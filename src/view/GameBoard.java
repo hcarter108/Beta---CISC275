@@ -29,7 +29,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	
 	private DifficultyLVL difficulty;
 	
-	private JPanel currentScreen;
+	private ScreenPanel currentScreen;
 	private static JMenuBar customJMenuBar;
 	
 	private int currentWidth;
@@ -151,7 +151,6 @@ public class GameBoard extends JFrame implements ActionListener {
 		currentWidth = (int) computer.getWidth();
 		currentHeight = (int) computer.getHeight();
 		updateScale();
-		System.out.println(scaleFactor);
         setSize(currentWidth, currentHeight);
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
         this.addComponentListener(new ComponentAdapter( ) {
@@ -396,7 +395,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	}
 	
 	private void communicate(){
-		((ScreenPanel) currentScreen).receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
+		currentScreen.receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
 	}
 }
 

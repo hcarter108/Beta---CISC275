@@ -51,8 +51,9 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 	public MainMenuScreen(Screens s, JFrame parent){
 		super();
 		parentBoard = parent;
-		board_Width = parent.getWidth();
-		board_Height = parent.getHeight();
+		board_Width = ((GameBoard) parent).getCurrentWidth();
+		board_Height = ((GameBoard) parent).getCurrentHeight();
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		scaleFactor = ((GameBoard) parent).getScaleFactor();
@@ -78,70 +79,70 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		
 		JLabel main = new JLabel("Main Menu");
 		main.setAlignmentX(Component.LEFT_ALIGNMENT);
-		main.setFont(new Font("Calibri", Font.PLAIN, 60));
+		main.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*60));
 		add(main);
-		add(Box.createRigidArea(new Dimension(20,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(20,(int)board_Height/30)));
 		
 		JLabel campaign = new JLabel("Campaign");
-		campaign.setFont(new Font("Calibri", Font.PLAIN, 36));
+		campaign.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*36));
 		add(campaign);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		start = new JButton("Begin Campaign");
-		start.setFont(new Font("Calibri", Font.PLAIN, 20));
+		start.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*20));
 		start.addActionListener(this);
 		start.setActionCommand("start");
 		this.add(start);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		JLabel lvlSelect = new JLabel("Level Select");
-		lvlSelect.setFont(new Font("Calibri", Font.PLAIN, 36));
+		lvlSelect.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*36));
 		this.add(lvlSelect);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		l1 = new JButton("Level 1 (BlackBird Creek Part I)");
-		l1.setFont(new Font("Calibri", Font.PLAIN, 12));
+		l1.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*12));
 		l1.addActionListener(this);
 		l1.setActionCommand("l1");
 		this.add(l1);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		l2 = new JButton("Level 2 (BlackBird Creek Part II)");
-		l2.setFont(new Font("Calibri", Font.PLAIN, 12));
+		l2.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*12));
 		l2.addActionListener(this);
 		l2.setActionCommand("l2");
 		this.add(l2);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		l3 = new JButton("Level 3 (St. Jones River Part I)");
-		l3.setFont(new Font("Calibri", Font.PLAIN, 12));
+		l3.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*12));
 		l3.addActionListener(this);
 		l3.setActionCommand("l3");
 		this.add(l3);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		l4 = new JButton("Level 4 (St. Jones River Part II)");
-		l4.setFont(new Font("Calibri", Font.PLAIN, 12));
+		l4.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*12));
 		l4.addActionListener(this);
 		l4.setActionCommand("l4");
 		this.add(l4);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		JLabel tutorial = new JLabel("Tutorial");
-		tutorial.setFont(new Font("Calibri", Font.PLAIN, 36));
+		tutorial.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*36));
 		this.add(tutorial);
 		
-		add(Box.createRigidArea(new Dimension(0,(int)board_Height/40)));
+		add(Box.createRigidArea(new Dimension(0,(int)board_Height/30)));
 		
 		JButton tutorialButton = new JButton("Begin Tutorial");
-		tutorialButton.setFont(new Font("Calibri", Font.PLAIN, 12));
+		tutorialButton.setFont(new Font("Calibri", Font.PLAIN, (int) scaleFactor*12));
 		tutorialButton.addActionListener(this);
 		tutorialButton.setActionCommand("tutorial");
 		this.add(tutorialButton);

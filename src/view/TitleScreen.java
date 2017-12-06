@@ -45,8 +45,7 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		parentBoard = parent;
 		board_Width = ((GameBoard) parent).getCurrentWidth();
 		board_Height = ((GameBoard) parent).getCurrentHeight();
-//		scaleFactor = ((GameBoard) parent).getScaleFactor();
-		System.out.println(scaleFactor);
+		scaleFactor = ((GameBoard) parent).getScaleFactor();
 		this.setPreferredSize(new Dimension(board_Width, board_Height));
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		bgImage = initBGImage();
@@ -71,14 +70,14 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		setLayout(col);
 		
 		JLabel title = new JLabel("Estuary Survival");
-		title.setFont(new Font("Calibri", Font.BOLD, 100));
+		title.setFont(new Font("Calibri", Font.BOLD, (int) (100*scaleFactor)));
 		add(Box.createRigidArea(new Dimension(0,(int)board_Height/5)));
 		this.add(title);
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		JButton start = new JButton("START");
 		start.setAlignmentX(Component.CENTER_ALIGNMENT);
-		start.setFont(new Font("Calibri", Font.BOLD, 40));
+		start.setFont(new Font("Calibri", Font.BOLD, (int) scaleFactor*80));
 		start.addActionListener(this);
 		add(Box.createRigidArea(new Dimension(0,(int)board_Height/8)));
 		this.add(start);
