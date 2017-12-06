@@ -62,7 +62,7 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		repaint();
 		this.setVisible(true);
 		}
-	
+
 	@Override
 	public Screens getScreenType(){
 		return Screens.MAIN;
@@ -148,6 +148,10 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		this.add(tutorialButton);
 	}
 	
+	/**
+	 * Initializes the BG Image associated with this ScreenType
+	 * @return - a scaled version of the BG Image associated with this ScreenType
+	 */
 	public Image initBGImage(){
 		Image img = uploadImage(Screens.MAIN.name());
 		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
@@ -275,6 +279,10 @@ public class MainMenuScreen extends ScreenPanel implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Called after a resizing event by Parent GameBoard, updates key variables
+	 * @author - Team 8
+	 */
 	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 		board_Width = boardWidth;
 		board_Height = boardHeight;

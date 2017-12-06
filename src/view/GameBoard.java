@@ -75,13 +75,29 @@ public class GameBoard extends JFrame implements ActionListener {
 		return isGame;
 	}
 	
+	/**
+	 * Gets the current width of this JFrame
+	 * @author - Team 8
+	 * @return- the current width of this JFrame
+	 */
 	public int getCurrentWidth(){
 		return currentWidth;
 	}
 	
+	/**
+	 * Gets the current height of this JFrame
+	 * @author - Team 8
+	 * @return- the current heigt of this JFrame
+	 */
 	public int getCurrentHeight(){
 		return currentHeight;
 	}
+	
+	/**
+	 * Gets the scale factor for the JFrame
+	 * @author - Team 8
+	 * @return- the scale factor for this JFrame
+	 */
 	public double getScaleFactor(){
 		return scaleFactor;
 	}
@@ -104,6 +120,11 @@ public class GameBoard extends JFrame implements ActionListener {
 		this.difficulty = difficulty;
 	}
 	
+	/**
+	 * Gets the dimensions of this JFrame
+	 * @author - Team 8
+	 * @return an int array containing the dimensions of this JFrame
+	 */
 	public int[] getDimensions(){
 		int[] dimensions = new int[] {currentWidth, currentHeight};
 		return dimensions;
@@ -174,8 +195,9 @@ public class GameBoard extends JFrame implements ActionListener {
 	}
 	
 	/**
+	 * Updates the scale factor, based on the minimum ratio between new-to-old width and height
 	 * @author - Team 8
-	 * @return
+	 * @return- the minimum of the ratios of new-to-old width and height
 	 */
 	private void updateScale(){
 		scaleFactor = Math.min((float)currentWidth/800, (float)currentHeight/600);
@@ -394,6 +416,10 @@ public class GameBoard extends JFrame implements ActionListener {
 			((LevelScreen) currentScreen).unpause();
 	}
 	
+	/**
+	 * Used to communicate to a JPanel that a resize has occurred
+	 * @author - Team 8
+	 */
 	private void communicate(){
 		currentScreen.receiveBoardInfo(currentWidth, currentHeight, scaleFactor);
 	}

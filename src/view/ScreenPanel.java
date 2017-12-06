@@ -48,17 +48,41 @@ public Image uploadImage(String s){
 	return helperObject.uploadImage(s);
 }
 
+/**
+ * Uploads a sound file using a helper function
+ * @author - Team 8
+ * @param s- the string associated with the file name
+ */
 public void uploadAndPlaySound(String s){
 	helperObject.uploadAndPlaySound(s);
 }
 
+/**
+ * Used to scale an image
+ * @author - Team 8
+ * @param img- the image to be scaled
+ * @param scaleFactor- the factor by which the image is scaled
+ * @return- a scaled instance of the original image
+ */
 public Image scale(Image img, double scaleFactor){
 	return img.getScaledInstance((int) (img.getWidth(null)*scaleFactor), (int) (img.getHeight(null)*scaleFactor), Image.SCALE_DEFAULT);
 }
 
+/**
+ * Meant to be used by child classes to receive updates from the GameBoard after a resize event
+ * @author - Team 8
+ * @param boardWidth- the new board width
+ * @param boardHeight- the new board height
+ * @param scaleFactor- the new scale factor
+ */
 public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 }
 
+/**
+ * Meant to be used by child classes, returns the type from enum Screens
+ * @author - Team 8
+ * @return the type from enum Screens
+ */
 public Screens getScreenType(){
 	return null;
 }

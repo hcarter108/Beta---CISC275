@@ -125,6 +125,11 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		
 	}
 	
+	/**
+	 * Initializes the BG Image associated with this ScreenType
+	 * @author - Team 8
+	 * @return- a scaled version of the BG Image associated with this ScreenType
+	 */
 	public Image initBGImage(){
 		Image img = uploadImage(currentScreen.name());
 		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
@@ -251,6 +256,10 @@ public class PreLevelScreen extends ScreenPanel implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Called by Parent GameBoard after resize event, updates key variables
+	 * @author - Team 8
+	 */
 	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 		board_Width = boardWidth;
 		board_Height = boardHeight;

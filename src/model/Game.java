@@ -146,14 +146,30 @@ public class Game {
 		this.gameObjSpeed = enemySpeed;
 	}
 	
+	/**Sets the scale factor for this game
+	 * @author - Team 8
+	 * @param scaleFactor - the value for the new scale factor
+	 */
 	public void setScaleFactor(double scaleFactor){
 		this.scaleFactor = scaleFactor;
 	}
 	
+	/**
+	 * Gets the scale factor for this game
+	 * @author - Team 8
+	 * @return- the scale factor for this game
+	 */
 	public double getScaleFactor(){
 		return scaleFactor;
 	}
 	
+	/**
+	 * Sets game variables width, height, and scale factor to new values, generally used in resizing event
+	 * @author - Team 8
+	 * @param width - the new width
+	 * @param height- the new height
+	 * @param scale- the new scale factor
+	 */
 	public void setBoardInfo(int width, int height, double scale){
 		windowWidth = width;
 		windowHeight = height;
@@ -298,6 +314,11 @@ public class Game {
 		}	
 	}
 	
+	/**
+	 * Sets the JPanel for this game, this will only be called if there is a view associated with this game, else the games runs only logically
+	 * @author - Team 8
+	 * @param panel- the JPanel associated with this game
+	 */
 	public void setPanelForCommunication(JPanel panel){
         currentPanel = panel;
 	}
@@ -321,6 +342,13 @@ public class Game {
         }
     }
     
+    /**
+     * Initializes an enemy spawn frame, or the locations from which enemies can spawn
+     * @author - Team 8
+     * @param start - the coordinate of the start position
+     * @param end - the coordinate of the end position
+     * @return - an ArrayList of Coordinates that contain the bounds for the enemy spawn frame
+     */
     private ArrayList<Coordinates> initEnemySpawnFrame(Coordinates start, Coordinates end){
  	   ArrayList<Coordinates> randomSpawnFrame = new ArrayList<Coordinates>();
  	   randomSpawnFrame.add(start);
@@ -361,7 +389,7 @@ public class Game {
      * or victory as well, based on either zero health or zero time, respectively. Also, if the enemy 
      * has moved outside the frame or if it collided with the player, it is replaced by a new
      * enemy instance
-     * 
+     * @author - Team 8
      */
     public void moveEnemies() {
 
@@ -490,7 +518,4 @@ public class Game {
 			System.out.println("You have won the game");
 	}
 	
-	public double calculateMaxScaling(int newWidth, int newHeight){
-		return Math.floor(Math.min(newWidth/windowWidth, newHeight/windowHeight));
-		}
 }

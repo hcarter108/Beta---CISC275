@@ -84,12 +84,20 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * Initializes the BG Image associated with this screen type
+	 * @author - Team 8
+	 * @return- a scaled version of the BG Image associated with this screen type
+	 */
 	public Image initBGImage(){
 		Image img = uploadImage(Screens.TITLE.name());
 		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
 	}
 	
-	// just placeholders
+	/**
+	 * Chooses a random song to play
+	 * @author - Team 8
+	 */
 	public void chooseRandomSong(){
 		double rand = Math.random();
 		if(rand<.5)
@@ -123,6 +131,10 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		((GameBoard) parentBoard).changeScreenTo(Screens.MAIN);
 	}
 	
+	/**
+	 * Called by a Parent GameBoard after a resize event, updates key variables
+	 * @author - Team 8
+	 */
 	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 		board_Width = boardWidth;
 		board_Height = boardHeight;

@@ -74,6 +74,11 @@ public class Enemy extends MoveableObject{
 
 	}
     
+    /**
+     * Getter for enemy type, from enum MoveableType
+     * @author - Team 8
+     * @return this enemy's type
+     */
     public MoveableType getEnemyType(){
     	return enemyType;
     }

@@ -42,6 +42,11 @@ public class Player extends MoveableObject{
 		return directionAngle;
 	}
 
+    /**
+     * Sets the scale factor associated with the game that contains this player
+     * @author - Team 8
+     * @param factor- the scale factor associated with a game
+     */
     public void setScaleFactor(double factor){
     	scaleFactor = factor;
     }

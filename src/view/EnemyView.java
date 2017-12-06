@@ -19,8 +19,7 @@ public class EnemyView {
 	private Coordinates coordinates;
 	private final MovingVector movingVector;
 	private Image enemyGraphic;
-	private Enemy enemyData; // In case we distinguish between enemy types for
-								// enemyDiameter, in particular
+	private Enemy enemyData; 
 
 	// Constructor
 
@@ -56,9 +55,6 @@ public class EnemyView {
 				(coordinates.getyPos() - enemyDiameter / 2));
 		at.rotate(Math.toRadians(enemyData.getMovingAngle() + 90), enemyDiameter/2, enemyDiameter/2);
 		g2.drawImage(enemyGraphic, at, null);
-		//debug stuff below, shows the hitbox as a red circle:
-		//g2.setColor(Color.RED);
-		//g2.drawOval((int)coordinates.getxPos()-enemyDiameter/2, (int)coordinates.getyPos()-enemyDiameter/2, enemyDiameter, enemyDiameter);
 	}
 
 }

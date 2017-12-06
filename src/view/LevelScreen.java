@@ -185,6 +185,10 @@ public class LevelScreen extends ScreenPanel {
 		unpause();
 	}
 	
+	/**
+	 * Called by the Parent GameBoard after a resizing event, updates key variables. Also, communicates with this Panel's game
+	 * @author - Team 8
+	 */
 	public void receiveBoardInfo(int boardWidth, int boardHeight, double scaleFactor){
 		board_Width = boardWidth;
 		board_Height = boardHeight;
