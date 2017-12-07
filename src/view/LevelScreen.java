@@ -288,7 +288,8 @@ public class LevelScreen extends ScreenPanel {
         	pause();
         	currentGame.getHealthBar().setCurrentPoints(0);
         	refreshView();
-        	JOptionPane.showMessageDialog(parent, "<html><center>If your health goes to zero, you can answer a question correctly <br>to get a new life, but there are only 4 questions per level</center></html>");
+        	JOptionPane.showMessageDialog(parent, "<html><center>If your health goes to zero, you can answer a question correctly <br>to get a new life, but there are only 4 questions per level. <br>"
+        			+ "The information for answering the questions is on the pre-level screen,<br> which will appear show during a normal game.</center></html>");
     	    
         	JLabel instructionsLabel = new JLabel("How do you move your player?");
         	JButton ans1 = new JButton("By sliding the mouse towards where you want to go");

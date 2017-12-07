@@ -173,6 +173,7 @@ public class GameBoard extends JFrame implements ActionListener {
 		currentHeight = (int) computer.getHeight();
 		updateScale();
         setSize(currentWidth, currentHeight);
+        setMinimumSize(new Dimension(800, 600));
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
         this.addComponentListener(new ComponentAdapter( ) {
 			  public void componentResized(ComponentEvent ev) {
