@@ -39,8 +39,7 @@ public class Game {
     private HealthBar hb;
     private GameTimer gt;
     private ArrayList<Coordinates> randomSpawnFrame = initEnemySpawnFrame(new Coordinates(-50, -50), 
-
-    		new Coordinates(windowWidth + 50, windowHeight + 50));;
+    		new Coordinates(windowWidth + 50, windowHeight + 50));
 	
 
     //Constructor
@@ -60,7 +59,7 @@ public class Game {
 		listEnemies = new Enemy[numEnemies];
         initListEnemies();
         player = new Player(new Coordinates(windowWidth/2, windowHeight/2), currentScreenType);
-        playerCollisionRad = player.getPlayerDiameter()/2;
+        playerCollisionRad = (int) (scaleFactor*player.getPlayerDiameter()/2);
 	}
 	
 	// Getters and Setters
@@ -491,7 +490,7 @@ public class Game {
         double enemyXCoordinates = anEnemy.getCoordinates().getxPos();
         double enemyYCoordinates = anEnemy.getCoordinates().getyPos();
         
-       int enemyCollisionRad = (int) anEnemy.getEnemyDiameter()/2;
+       int enemyCollisionRad = (int) (scaleFactor*anEnemy.getEnemyDiameter()/2);
 
         if (Math.sqrt(Math.pow(player.getCoordinates().getxPos() - enemyXCoordinates, 2) 
         		+ Math.pow(player.getCoordinates().getyPos() - enemyYCoordinates, 2)) 
