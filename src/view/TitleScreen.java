@@ -50,7 +50,6 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		this.setMinimumSize(new Dimension(board_Width, board_Height));
 		bgImage = initBGImage();
 		buildTitleScreen();
-		chooseRandomSong();
 		setVisible(true);
 		}
 	
@@ -94,17 +93,6 @@ public class TitleScreen extends ScreenPanel implements ActionListener{
 		return img.getScaledInstance(board_Width, board_Height, Image.SCALE_DEFAULT);
 	}
 	
-	/**
-	 * Chooses a random song to play
-	 * @author - Team 8
-	 */
-	public void chooseRandomSong(){
-		double rand = Math.random();
-		if(rand<.5)
-			uploadAndPlaySound("Ride of the Valkyries.wav");
-		else 
-			uploadAndPlaySound("2001 A Space Odyssey Opening.wav");
-	}
 	//Override of paintComponent()
 	
 	/**

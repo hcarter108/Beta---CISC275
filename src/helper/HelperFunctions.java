@@ -64,6 +64,9 @@ public class HelperFunctions {
 		return img;
 	}
 	
+	// We were going to do more with this, but decided against it since we couldn't easily make our own sounds.
+	// However, the functionality has been checked and is left in case anyone ever wanted to use it\
+	// All this function assumes is that the sound files are put in the sounds package within this project
 	/**
 	 * Uploads an audio file and plays the sound.
 	 * @author - Team 8

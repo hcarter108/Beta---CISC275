@@ -1,23 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.TreeSet;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,11 +22,8 @@ import javax.swing.JPanel;
 import controller.Controller;
 import model.Enemy;
 import model.Game;
-import model.HealthBar;
-import model.Player;
 import model.Game.DifficultyLVL;
-import model.GameTimer;
-import view.ScreenPanel.Screens;
+
 
 public class LevelScreen extends ScreenPanel {
 
@@ -44,6 +34,7 @@ public class LevelScreen extends ScreenPanel {
 	private JFrame parent;
 	private LevelScreen thisLevel;
 	private ArrayList<JButton> arrayOfAnswerButtons = new ArrayList<JButton>();
+	private JButton pause;
 	
 	private int board_Width;
 	private int board_Height;
@@ -157,6 +148,16 @@ public class LevelScreen extends ScreenPanel {
 		return currentScreen;
 	}
 	
+	/**
+	 * Getter for the pause button, necessary since the text needs to be changed if a JMenuItem is opened and closed
+	 * since they by default pause and unpause the game, but the text needs to be updated in case the pause button was hit first.
+	 * @author - Team 8
+	 * @return- the pause button for this LevelScreen
+	 */
+	public JButton getPauseButton(){
+		return pause;
+	}
+	
 	// Functions for initialization of variables and the view
 	
 	/**
@@ -202,7 +203,7 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 */
 	public void initLayoutWithPause(){
-		JButton pause = new JButton("Pause");
+		pause = new JButton("Pause");
 		pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				if(((GameBoard) parent).isPaused()){
@@ -448,7 +449,7 @@ public class LevelScreen extends ScreenPanel {
 	 * @author - Team 8
 	 * @param g - an instance of Graphics used internally by Java
 	 */
-	private void paintBalls(Graphics g) {
+	private void paintEnemies(Graphics g) {
 		Enemy[] listEnemies = currentGame.getListEnemies();
 
 		for (int i = 0; i < currentGame.getNumInvasive(); i++) 
@@ -477,7 +478,7 @@ public class LevelScreen extends ScreenPanel {
 			paintPlayer(g);
 
 			if (currentGame.getListEnemies() != null) {
-				paintBalls(g);
+				paintEnemies(g);
 			}
 
 			paintHealthBar(g);

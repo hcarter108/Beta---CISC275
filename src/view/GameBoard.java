@@ -35,7 +35,6 @@ public class GameBoard extends JFrame implements ActionListener {
 	private int currentWidth;
 	private int currentHeight;
 	private double scaleFactor = 1;
-	private boolean isBaseDimension=true;
 	private boolean isGame = false;
 	private boolean isPaused = false;
 
@@ -413,8 +412,10 @@ public class GameBoard extends JFrame implements ActionListener {
 					+ "to protect and maintain the health of estuaries.  </center></html>");
 		}
 		}
-		if (isGame)
+		if (isGame){
 			((LevelScreen) currentScreen).unpause();
+			((LevelScreen) currentScreen).getPauseButton().setText("Pause");
+		}
 	}
 	
 	/**

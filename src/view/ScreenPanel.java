@@ -48,6 +48,10 @@ public Image uploadImage(String s){
 	return helperObject.uploadImage(s);
 }
 
+// The true function is found in HelperFunctions, this was intended to be called from
+// any of the game screens, and can be called without issue (it works), but we decided to remove our sounds from the game since 
+// we were unable to easily make our own (not really skilled with that), hence there could've been issues with copyright/etc. 
+// If one owned the sounds though, this could easily be used for bg music, sound effects, etc.
 /**
  * Uploads a sound file using a helper function
  * @author - Team 8
