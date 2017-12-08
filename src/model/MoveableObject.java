@@ -8,7 +8,7 @@ import view.ScreenPanel.Screens;
 
 public class MoveableObject {
 
-	enum MoveableType {PLAYER, INVASIVE, POLLUTION};
+	public enum MoveableType {PLAYER, INVASIVE, POLLUTION};
 	private HelperFunctions helperObject = new HelperFunctions();
 	
 	/**

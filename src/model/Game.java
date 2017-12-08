@@ -32,7 +32,7 @@ public class Game {
 	private int numInvasiveEnemy;
 	private int numPollutionEnemy;
 	private boolean notQ=true;
-	private double scaleFactor = 1;
+	private double scaleFactor = Math.min(windowWidth/800, windowHeight/600);
     
 	private Player player;
 	private Enemy[] listEnemies;
@@ -393,11 +393,11 @@ public class Game {
     public void moveEnemies() {
 
         for(int i = 0; i< listEnemies.length; i++) {
-            Coordinates ballCoordinates = listEnemies[i].getCoordinates();
-            if(ballCoordinates.getxPos() < getSpawnXBeginning()
-                    || ballCoordinates.getxPos() > getSpawnXEnding()
-                    || ballCoordinates.getyPos() > getSpawnYEnding()
-                    || ballCoordinates.getyPos() < getSpawnYBeginning() ) {
+            Coordinates coordinates = listEnemies[i].getCoordinates();
+            if(coordinates.getxPos() < getSpawnXBeginning()
+                    || coordinates.getxPos() > getSpawnXEnding()
+                    || coordinates.getyPos() > getSpawnYEnding()
+                    || coordinates.getyPos() < getSpawnYBeginning() ) {
                 Coordinates newBallCoordinates = randomizeCoordinates();
                 MovingVector movingVector = randomizeMovingVector();
                 Enemy anEnemy = new Enemy(newBallCoordinates, movingVector, 
@@ -420,9 +420,9 @@ public class Game {
                 		
                 }
 
-                Coordinates newBallCoordinates = randomizeCoordinates();
+                Coordinates newCoordinate = randomizeCoordinates();
                 MovingVector movingVector = randomizeMovingVector();
-                listEnemies[i] = new Enemy(newBallCoordinates, movingVector, 
+                listEnemies[i] = new Enemy(newCoordinate, movingVector, 
                 		currentScreenType, listEnemies[i].getEnemyType());
             }
 
