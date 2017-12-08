@@ -398,9 +398,9 @@ public class Game {
                     || coordinates.getxPos() > getSpawnXEnding()
                     || coordinates.getyPos() > getSpawnYEnding()
                     || coordinates.getyPos() < getSpawnYBeginning() ) {
-                Coordinates newBallCoordinates = randomizeCoordinates();
+                Coordinates newCoordinates = randomizeCoordinates();
                 MovingVector movingVector = randomizeMovingVector();
-                Enemy anEnemy = new Enemy(newBallCoordinates, movingVector, 
+                Enemy anEnemy = new Enemy(newCoordinates, movingVector, 
                 		currentScreenType, listEnemies[i].getEnemyType());
                 listEnemies[i] = anEnemy;
             }
@@ -485,7 +485,7 @@ public class Game {
      * @param anEnemy - an instance of Enemy
      * @return - the boolean value of whether or not a collision occurred
      */
-    private boolean checkForCollision(Enemy anEnemy) {
+    public boolean checkForCollision(Enemy anEnemy) {
 
         double enemyXCoordinates = anEnemy.getCoordinates().getxPos();
         double enemyYCoordinates = anEnemy.getCoordinates().getyPos();
