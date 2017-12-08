@@ -20,6 +20,8 @@ import view.ScreenPanel.Screens;
 
 public class TestGame {
 	
+	// the things not tested are essentially getters which literally just return fields and a couple randomization functions, difficult to test accurately
+	
 	private static Game testGame;
 	
 	// needs to be reinitialized each time so as to avoid changing it between tests
@@ -85,6 +87,7 @@ public class TestGame {
 		}
 	}
 	
+	// This test was run somewhat independently of the game, but tests the function contained within the Game class
 	@Test
 	public void checkCollisionCases(){
 		Coordinates playerC = testGame.getPlayer().getCoordinates();

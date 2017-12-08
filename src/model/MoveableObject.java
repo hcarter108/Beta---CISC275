@@ -25,10 +25,10 @@ public class MoveableObject {
 			enumString = MoveableType.PLAYER.name();
 			break;}
 		case INVASIVE:{
-			enumString = MoveableType.PLAYER.name();
+			enumString = MoveableType.INVASIVE.name();
 			break;}
 		case POLLUTION:{
-			enumString = MoveableType.PLAYER.name();
+			enumString = MoveableType.POLLUTION.name();
 			break;}
 		}
 		Image moveableImg = helperObject.uploadImage(level.name()+enumString);
